@@ -212,3 +212,23 @@ void LabArchive::addFile(const char* fileName, const char* filePath)
 	// STUB: No ability to add files yet.
 	assert(0);
 }
+
+bool LabArchive::validate(const char *archivePath, s32 minFileCount)
+{
+	FileStream file;
+	if (!file.open(archivePath, Stream::MODE_READ))
+	{
+		return false;
+	}
+
+	// Read the directory.
+	LAB_Header_t header;
+	if (file.readBuffer(&header, sizeof(LAB_Header_t)) != sizeof(LAB_Header_t))
+	{
+		file.close();
+		return false;
+	}
+	file.close();
+
+	return header.fileCount >= minFileCount;
+}

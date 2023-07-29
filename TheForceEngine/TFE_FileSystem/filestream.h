@@ -32,6 +32,8 @@ public:
 	bool   isOpen()  const;
 
 	void flush();
+	// Equivalent to fgets()
+	char* getString(char* buffer, s32 maxSize);
 
 	void read(s8*  ptr, u32 count=1) override { readType(ptr, count); }
 	void read(u8*  ptr, u32 count=1) override { readType(ptr, count); }

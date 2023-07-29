@@ -548,6 +548,11 @@ echo ^)";
     <ClInclude Include="TFE_Jedi\InfSystem\infSystem.h" />
     <ClInclude Include="TFE_Jedi\InfSystem\infTypesInternal.h" />
     <ClInclude Include="TFE_Jedi\InfSystem\message.h" />
+    <ClInclude Include="TFE_Jedi\LevelV2\levelDataV2.h" />
+    <ClInclude Include="TFE_Jedi\LevelV2\rsectorV2.h" />
+    <ClInclude Include="TFE_Jedi\LevelV2\rslopeV2.h" />
+    <ClInclude Include="TFE_Jedi\LevelV2\rtextureV2.h" />
+    <ClInclude Include="TFE_Jedi\LevelV2\rwallV2.h" />
     <ClInclude Include="TFE_Jedi\Level\level.h" />
     <ClInclude Include="TFE_Jedi\Level\levelData.h" />
     <ClInclude Include="TFE_Jedi\Level\levelTextures.h" />
@@ -620,6 +625,7 @@ echo ^)";
     <ClInclude Include="TFE_Jedi\Serialization\serialization.h" />
     <ClInclude Include="TFE_Jedi\Task\task.h" />
     <ClInclude Include="TFE_Jedi\Task\taskMacros.h" />
+    <ClInclude Include="TFE_Jedi\Util\jtokenize.h" />
     <ClInclude Include="TFE_Memory\chunkedArray.h" />
     <ClInclude Include="TFE_Memory\memoryRegion.h" />
     <ClInclude Include="TFE_Outlaws\outlawsMain.h" />
@@ -865,6 +871,10 @@ echo ^)";
     <ClCompile Include="TFE_Jedi\InfSystem\infState.cpp" />
     <ClCompile Include="TFE_Jedi\InfSystem\infSystem.cpp" />
     <ClCompile Include="TFE_Jedi\InfSystem\message.cpp" />
+    <ClCompile Include="TFE_Jedi\LevelV2\levelDataV2.cpp" />
+    <ClCompile Include="TFE_Jedi\LevelV2\rsectorV2.cpp" />
+    <ClCompile Include="TFE_Jedi\LevelV2\rtextureV2.cpp" />
+    <ClCompile Include="TFE_Jedi\LevelV2\rwallV2.cpp" />
     <ClCompile Include="TFE_Jedi\Level\level.cpp" />
     <ClCompile Include="TFE_Jedi\Level\levelData.cpp" />
     <ClCompile Include="TFE_Jedi\Level\levelTextures.cpp" />
@@ -924,6 +934,7 @@ echo ^)";
     <ClCompile Include="TFE_Jedi\Renderer\virtualFramebuffer.cpp" />
     <ClCompile Include="TFE_Jedi\Serialization\serialization.cpp" />
     <ClCompile Include="TFE_Jedi\Task\task.cpp" />
+    <ClCompile Include="TFE_Jedi\Util\jtokenize.cpp" />
     <ClCompile Include="TFE_Memory\chunkedArray.cpp" />
     <ClCompile Include="TFE_Memory\memoryRegion.cpp" />
     <ClCompile Include="TFE_Outlaws\outlawsMain.cpp" />

@@ -176,6 +176,27 @@
     <Filter Include="Source\TFE_Audio\MidiSynth">
       <UniqueIdentifier>{92bc3a8b-84cf-4313-928e-cad926435b95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\TFE_Jedi\CollisionV2">
+      <UniqueIdentifier>{5bcbd80f-9b23-4db2-8268-e32faaa53657}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TFE_Jedi\InfSystemV2">
+      <UniqueIdentifier>{428b0e8a-bdbc-444d-8508-82a3dbe776e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TFE_Jedi\LevelV2">
+      <UniqueIdentifier>{493b9369-02bf-493c-91a3-ffb06845066b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TFE_Jedi\RendererV2">
+      <UniqueIdentifier>{a2510a30-b842-4b57-b20e-88e8ee80118f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TFE_Jedi\SerializationV2">
+      <UniqueIdentifier>{0cbabe1f-e3f5-4d5a-8dc1-70169f4af162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TFE_Jedi\TaskV2">
+      <UniqueIdentifier>{e50d1311-6630-4c22-a1cf-225b286f8031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TFE_Jedi\Util">
+      <UniqueIdentifier>{df45ea63-480e-4c6e-ae02-d1e58ba92610}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1249,6 +1270,24 @@
     <ClInclude Include="TFE_Audio\MidiSynth\fm4Tables.h">
       <Filter>Source\TFE_Audio\MidiSynth</Filter>
     </ClInclude>
+    <ClInclude Include="TFE_Jedi\LevelV2\rsectorV2.h">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClInclude>
+    <ClInclude Include="TFE_Jedi\LevelV2\rtextureV2.h">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClInclude>
+    <ClInclude Include="TFE_Jedi\LevelV2\rwallV2.h">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClInclude>
+    <ClInclude Include="TFE_Jedi\LevelV2\rslopeV2.h">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClInclude>
+    <ClInclude Include="TFE_Jedi\LevelV2\levelDataV2.h">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClInclude>
+    <ClInclude Include="TFE_Jedi\Util\jtokenize.h">
+      <Filter>Source\TFE_Jedi\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2111,6 +2150,21 @@
     </ClCompile>
     <ClCompile Include="TFE_Audio\MidiSynth\fm4Opl3Device.cpp">
       <Filter>Source\TFE_Audio\MidiSynth</Filter>
+    </ClCompile>
+    <ClCompile Include="TFE_Jedi\LevelV2\rsectorV2.cpp">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClCompile>
+    <ClCompile Include="TFE_Jedi\LevelV2\rtextureV2.cpp">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClCompile>
+    <ClCompile Include="TFE_Jedi\LevelV2\rwallV2.cpp">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClCompile>
+    <ClCompile Include="TFE_Jedi\LevelV2\levelDataV2.cpp">
+      <Filter>Source\TFE_Jedi\LevelV2</Filter>
+    </ClCompile>
+    <ClCompile Include="TFE_Jedi\Util\jtokenize.cpp">
+      <Filter>Source\TFE_Jedi\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,7 @@
 namespace TFE_Jedi
 {
 	static bool s_init = false;
+	static RendererVersion s_rendererVersion = RVERSION_UNKNOWN;
 	static TFE_SubRenderer s_subRenderer = TSR_CLASSIC_FIXED;
 	static std::vector<TextureListCallback> s_hudTextureCallbacks;
 	static TFE_Sectors* s_sectorRendererCache[TSR_COUNT] = { nullptr };
@@ -63,6 +64,7 @@ namespace TFE_Jedi
 
 		s_sectorRenderer = nullptr;
 		s_subRenderer = TSR_INVALID;
+		s_rendererVersion = RVERSION_UNKNOWN;
 		s_init = false;
 		vfb_setMode();
 	}
@@ -97,9 +99,11 @@ namespace TFE_Jedi
 		return nullptr;
 	}
 	
-	void renderer_init()
+	void renderer_init(RendererVersion version)
 	{
 		if (s_init) { return; }
+
+		s_rendererVersion = version;
 		s_init = true;
 		// Setup Debug CVars.
 		s_maxWallCount = 0xffff;
@@ -120,7 +124,9 @@ namespace TFE_Jedi
 		TFE_COUNTER(s_curWallSeg,     "Wall Segment Count");
 		TFE_COUNTER(s_adjoinSegCount, "Adjoin Segment Count");
 
-		s_sectorRenderer = renderer_getSectorRenderer(TSR_CLASSIC_FIXED);
+		// Only version 1 of the renderer (Dark Forces) supports fixed-point rendering.
+		// Higher versions use floating point instead.
+		s_sectorRenderer = renderer_getSectorRenderer(s_rendererVersion == RVERSION_1 ? TSR_CLASSIC_FIXED : TSR_CLASSIC_FLOAT);
 		renderer_setLimits();
 	}
 
@@ -307,7 +313,8 @@ namespace TFE_Jedi
 
 	JBool setSubRenderer(TFE_SubRenderer subRenderer/* = TSR_CLASSIC_FIXED*/)
 	{
-		if (subRenderer == TSR_HIGH_RESOLUTION)
+		// version 2+ of the renderer does not support fixed-point.
+		if (subRenderer == TSR_HIGH_RESOLUTION || s_rendererVersion > RVERSION_1)
 		{
 			subRenderer = s_rendererType == RENDERER_HARDWARE ? TSR_CLASSIC_GPU : TSR_CLASSIC_FLOAT;
 		}
@@ -329,6 +336,7 @@ namespace TFE_Jedi
 		{
 			case TSR_CLASSIC_FIXED:
 			{
+				assert(s_rendererVersion == RVERSION_1);
 				vfb_setResolution(320, 200);
 				s_sectorRenderer = renderer_getSectorRenderer(TSR_CLASSIC_FIXED);
 				screen_enableGPU(false);

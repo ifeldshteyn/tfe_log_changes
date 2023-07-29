@@ -1146,6 +1146,10 @@ namespace TFE_Jedi
 #if 0
 		debug_update();
 #endif
+		if (!sector)
+		{
+			return false;
+		}
 
 		// First build the camera frustum and push it onto the stack.
 		frustum_buildFromCamera();

@@ -1004,6 +1004,7 @@ namespace TFE_FrontEndUI
 	{
 		TFE_GameHeader* darkForces = TFE_Settings::getGameHeader("Dark Forces");
 		TFE_GameHeader* outlaws = TFE_Settings::getGameHeader("Outlaws");
+		TFE_Game* game = TFE_Settings::getGame();
 
 		s32 browseWinOpen = -1;
 		
@@ -1021,8 +1022,10 @@ namespace TFE_FrontEndUI
 
 		if (ImGui::Button("Autodetect Paths"))
 		{
+			TFE_GameHeader* header = TFE_Settings::getGameHeaderByIndex(game->id);
+
 			TFE_Settings::autodetectGamePaths();
-			TFE_Paths::setPath(PATH_SOURCE_DATA, darkForces->sourcePath);
+			TFE_Paths::setPath(PATH_SOURCE_DATA, header->sourcePath);
 		}
 
 		ImGui::Text("Dark Forces:"); ImGui::SameLine(100*s_uiScale);
@@ -1040,9 +1043,12 @@ namespace TFE_FrontEndUI
 			if (FileUtil::exists(testFile))
 			{
 				strcpy(darkForces->sourcePath, testPath);
-				TFE_Paths::setPath(PATH_SOURCE_DATA, testPath);
+				if (game->id == Game_Dark_Forces)
+				{
+					TFE_Paths::setPath(PATH_SOURCE_DATA, testPath);
+				}
 			}
-			else
+			else if (game->id == Game_Dark_Forces)
 			{
 				s_drawNoGameDataMsg = true;
 				TFE_Paths::setPath(PATH_SOURCE_DATA, darkForces->sourcePath);
@@ -1057,7 +1063,28 @@ namespace TFE_FrontEndUI
 		ImGui::Text("Outlaws:"); ImGui::SameLine(100*s_uiScale);
 		if (ImGui::InputText("##OutlawsSource", outlaws->sourcePath, 1024))
 		{
-			// TODO
+			char testFile[TFE_MAX_PATH];
+			char testPath[TFE_MAX_PATH];
+			strcpy(testPath, outlaws->sourcePath);
+			FileUtil::fixupPath(testPath);
+
+			sprintf(testFile, "%soutlaws.lab", testPath);
+			strcpy(outlaws->sourcePath, testPath);
+			TFE_Paths::setPath(PATH_SOURCE_DATA, testPath);
+
+			if (FileUtil::exists(testFile))
+			{
+				strcpy(outlaws->sourcePath, testPath);
+				if (game->id == Game_Outlaws)
+				{
+					TFE_Paths::setPath(PATH_SOURCE_DATA, testPath);
+				}
+			}
+			else if (game->id == Game_Outlaws)
+			{
+				s_drawNoGameDataMsg = true;
+				TFE_Paths::setPath(PATH_SOURCE_DATA, outlaws->sourcePath);
+			}
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Browse##Outlaws"))
@@ -1072,15 +1099,22 @@ namespace TFE_FrontEndUI
 		const char* c_games[] =
 		{
 			"Dark Forces",
-			// "Outlaws",  -- TODO
+			"Outlaws",
 		};
-		static s32 s_gameIndex = 0;
 		ImGui::PushFont(s_dialogFont);
 		ImGui::LabelText("##ConfigLabel", "Current Game");
 		ImGui::PopFont();
 
 		ImGui::SetNextItemWidth(256.0f);
-		ImGui::Combo("##Current Game", &s_gameIndex, c_games, IM_ARRAYSIZE(c_games));
+		s32 gameId = s32(game->id);
+		if (ImGui::Combo("##Current Game", &gameId, c_games, IM_ARRAYSIZE(c_games)))
+		{
+			game->id = GameID(gameId);
+			TFE_GameHeader* header = TFE_Settings::getGameHeaderByIndex(gameId);
+			strcpy(game->game, header->gameName);
+
+			TFE_Paths::setPath(PATH_SOURCE_DATA, header->sourcePath);
+		}
 
 		//////////////////////////////////////////////////////
 		// Game Settings
@@ -1191,7 +1225,7 @@ namespace TFE_FrontEndUI
 					if (FileUtil::exists(testFile))
 					{
 						strcpy(outlaws->sourcePath, filePath);
-						// TFE_Paths::setPath(PATH_SOURCE_DATA, outlaws->sourcePath);
+						TFE_Paths::setPath(PATH_SOURCE_DATA, outlaws->sourcePath);
 					}
 					else
 					{

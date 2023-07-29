@@ -42,10 +42,18 @@ enum RendererType
 	RENDERER_COUNT
 };
 
+enum RendererVersion
+{
+	RVERSION_UNKNOWN = 0,
+	RVERSION_1,		// Dark Forces.
+	RVERSION_2,		// Outlaws.
+	RVERSION_COUNT
+};
+
 namespace TFE_Jedi
 {
 	void renderer_resetState();
-	void renderer_init();
+	void renderer_init(RendererVersion version = RVERSION_1);
 	void renderer_destroy();
 	void renderer_reset();
 	void renderer_setLimits();

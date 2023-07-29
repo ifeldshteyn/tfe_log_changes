@@ -199,6 +199,13 @@ bool FileStream::isOpen() const
 	return m_file!=nullptr || m_archive!=nullptr;
 }
 
+char* FileStream::getString(char* buffer, s32 maxSize)
+{
+	assert(m_mode == MODE_READ || m_mode == MODE_READWRITE);
+	if (!m_file) { return nullptr; }
+	return fgets(buffer, maxSize, m_file);
+}
+
 u32 FileStream::readBuffer(void* ptr, u32 size, u32 count)
 {
 	assert(m_mode == MODE_READ || m_mode == MODE_READWRITE);

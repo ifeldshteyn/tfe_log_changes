@@ -155,6 +155,9 @@ struct TFE_Settings_Game
 {
 	TFE_GameHeader header[Game_Count];
 
+	// Game Choice.
+	s32  gameIndex = 0;					// Which game to load, default = Dark Forces.
+
 	// Dark Forces
 	s32  df_airControl = 0;				// Air control, default = 0, where 0 = speed/256 and 8 = speed; range = [0, 8]
 	bool df_bobaFettFacePlayer = false;	// Make Boba Fett try to face the player in all his attack phases.
@@ -188,6 +191,7 @@ namespace TFE_Settings
 	TFE_Settings_System* getSystemSettings();
 	TFE_Game* getGame();
 	TFE_GameHeader* getGameHeader(const char* gameName);
+	TFE_GameHeader* getGameHeaderByIndex(s32 index);
 	TFE_Settings_Game* getGameSettings();
 
 	bool validatePath(const char* path, const char* sentinel);

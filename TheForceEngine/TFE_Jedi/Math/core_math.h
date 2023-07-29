@@ -233,7 +233,7 @@ namespace TFE_Jedi
 		fixed16_16 dz = abs(z1 - z0);
 		return dx + dz - (min(dx, dz) >> 1);
 	}
-
+		
 	angle14_32 getAngleDifference(angle14_32 angle0, angle14_32 angle1);
 	void mulMatrix3x3(fixed16_16* mtx0, fixed16_16* mtx1, fixed16_16* mtxOut);
 
@@ -296,6 +296,13 @@ namespace TFE_Jedi
 	inline f32 dot(const vec3_float* v0, const vec3_float* v1)
 	{
 		return v0->x*v1->x + v0->y*v1->y + v0->z*v1->z;
+	}
+
+	inline f32 distApprox(f32 x0, f32 z0, f32 x1, f32 z1)
+	{
+		f32 dx = fabsf(x1 - x0);
+		f32 dz = fabsf(z1 - z0);
+		return dx + dz - (min(dx, dz) * 0.5f);
 	}
 
 	void normalizeVec3(vec3_float* vIn, vec3_float* vOut);

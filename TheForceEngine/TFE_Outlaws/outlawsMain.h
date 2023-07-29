@@ -15,5 +15,6 @@ namespace TFE_Outlaws
 		void pauseSound(bool pause) override;
 		void restartMusic() override;
 		void exitGame() override;
+		void loopGame() override;
 	};
 }

@@ -5,6 +5,7 @@
 #include <TFE_System/profiler.h>
 #include <TFE_Memory/memoryRegion.h>
 #include <TFE_Archive/gobArchive.h>
+#include <TFE_Archive/labArchive.h>
 #include <TFE_Game/igame.h>
 #include <TFE_Game/saveSystem.h>
 #include <TFE_Game/reticle.h>
@@ -495,25 +496,44 @@ void generateScreenshotTime()
 	}
 }
 
+bool validateArchive(const char* archivePath)
+{
+	if (strstr(archivePath, ".GOB"))
+	{
+		return GobArchive::validate(archivePath, 130);
+	}
+	else if (strstr(archivePath, ".LAB"))
+	{
+		return LabArchive::validate(archivePath, 90);
+	}
+	// Unknown, return true by default.
+	return true;
+}
+
 bool validatePath()
 {
 	if (!TFE_Paths::hasPath(PATH_SOURCE_DATA)) { return false; }
 
 	char testFile[TFE_MAX_PATH];
-	// if (game->id == Game_Dark_Forces)
+	TFE_Game* game = TFE_Settings::getGame();
+
+	const char* mainArchive[]=
 	{
-		// Does DARK.GOB exist?
-		sprintf(testFile, "%s%s", TFE_Paths::getPath(PATH_SOURCE_DATA), "DARK.GOB");
-		if (!FileUtil::exists(testFile))
-		{
-			TFE_System::logWrite(LOG_ERROR, "Main", "Invalid game source path: '%s' - '%s' does not exist.", TFE_Paths::getPath(PATH_SOURCE_DATA), testFile);
-			TFE_Paths::setPath(PATH_SOURCE_DATA, "");
-		}
-		else if (!GobArchive::validate(testFile, 130))
-		{
-			TFE_System::logWrite(LOG_ERROR, "Main", "Invalid game source path: '%s' - '%s' GOB is invalid, too few files.", TFE_Paths::getPath(PATH_SOURCE_DATA), testFile);
-			TFE_Paths::setPath(PATH_SOURCE_DATA, "");
-		}
+		"DARK.GOB",
+		"OUTLAWS.LAB",
+	};
+
+	// Does the archive exist?
+	sprintf(testFile, "%s%s", TFE_Paths::getPath(PATH_SOURCE_DATA), mainArchive[game->id]);
+	if (!FileUtil::exists(testFile))
+	{
+		TFE_System::logWrite(LOG_ERROR, "Main", "Invalid game source path: '%s' - '%s' does not exist.", TFE_Paths::getPath(PATH_SOURCE_DATA), testFile);
+		TFE_Paths::setPath(PATH_SOURCE_DATA, "");
+	}
+	else if (!validateArchive(testFile))
+	{
+		TFE_System::logWrite(LOG_ERROR, "Main", "Invalid game source path: '%s' - '%s' Archive is invalid, too few files.", TFE_Paths::getPath(PATH_SOURCE_DATA), testFile);
+		TFE_Paths::setPath(PATH_SOURCE_DATA, "");
 	}
 	return TFE_Paths::hasPath(PATH_SOURCE_DATA);
 }

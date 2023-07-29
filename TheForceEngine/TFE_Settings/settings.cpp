@@ -172,6 +172,43 @@ namespace TFE_Settings
 					}
 				}
 			}
+			else if (!pathValid && gameId == Game_Outlaws)
+			{
+				// First try the local path.
+				char localPath[TFE_MAX_PATH];
+				TFE_Paths::appendPath(PATH_PROGRAM, "outlaws.lab", localPath);
+
+				FileStream file;
+				if (file.open(localPath, Stream::MODE_READ))
+				{
+					if (file.getSize() > 1)
+					{
+						strcpy(s_gameSettings.header[gameId].sourcePath, TFE_Paths::getPath(PATH_PROGRAM));
+						FileUtil::fixupPath(s_gameSettings.header[gameId].sourcePath);
+						pathValid = true;
+					}
+					file.close();
+				}
+
+				// Then try local/Games/Dark Forces/
+				if (!pathValid)
+				{
+					char gamePath[TFE_MAX_PATH];
+					sprintf(gamePath, "%sGames/Outlaws/", TFE_Paths::getPath(PATH_PROGRAM));
+					FileUtil::fixupPath(gamePath);
+
+					sprintf(localPath, "%soutlaws.lab", gamePath);
+					if (file.open(localPath, Stream::MODE_READ))
+					{
+						if (file.getSize() > 1)
+						{
+							strcpy(s_gameSettings.header[gameId].sourcePath, gamePath);
+							pathValid = true;
+						}
+						file.close();
+					}
+				}
+			}
 
 #ifdef _WIN32
 			// Next try looking through the registry.
@@ -292,6 +329,12 @@ namespace TFE_Settings
 		}
 
 		return nullptr;
+	}
+
+	TFE_GameHeader* getGameHeaderByIndex(s32 index)
+	{
+		if (index < 0 || index >= Game_Count) { return nullptr; }
+		return &s_gameSettings.header[index];
 	}
 
 	TFE_Settings_Game* getGameSettings()
