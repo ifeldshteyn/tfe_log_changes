@@ -1141,7 +1141,7 @@ namespace TFE_DarkForces
 		ThinkerModule* thinkerMod = (ThinkerModule*)module;
 		SecObject* obj = thinkerMod->header.obj;
 
-		if (thinkerMod->anim.state == 1)
+		if (thinkerMod->anim.state == STATE_WALK)
 		{
 			ActorTarget* target = &thinkerMod->target;
 			JBool arrivedAtTarget = actor_arrivedAtTarget(target, obj);
@@ -1151,7 +1151,7 @@ namespace TFE_DarkForces
 				{
 					thinkerMod->playerLastSeen = 0xffffffff;
 				}
-				thinkerMod->anim.state = STATE_FIRE1;
+				thinkerMod->anim.state = STATE_TURN;
 			}
 			else
 			{
@@ -1185,7 +1185,7 @@ namespace TFE_DarkForces
 				}
 			}
 		}
-		else if (thinkerMod->anim.state == 2)
+		else if (thinkerMod->anim.state == STATE_TURN)
 		{
 			ActorDispatch* logic = actor_getCurrentLogic();
 			fixed16_16 targetX, targetZ;
@@ -1239,7 +1239,7 @@ namespace TFE_DarkForces
 				}
 				logic->flags |= 2;
 			}
-			thinkerMod->anim.state = STATE_ANIMATEATTACK;
+			thinkerMod->anim.state = STATE_WALK;
 			thinkerMod->nextTick = s_curTick + thinkerMod->maxWalkTime;
 
 			if (obj->entityFlags & ETFLAG_REMOTE)
